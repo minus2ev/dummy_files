@@ -1,0 +1,33 @@
+syntax = "proto2";
+
+package dummy_files;
+
+message Request {
+    enum Operation {
+        UPLOAD = 0;
+        DOWNLOAD = 1;
+    }
+    required Operation op = 11;
+    required string file_name = 2;
+}
+
+message Response {
+    enum Error {
+        NO_ERROR = 0;
+        ERROR = 1;
+    }
+    required Error err = 1;
+    optional int32 size = 2;
+    optional string md5 = 3;
+}
+
+message Chunk {
+    required bool has_more = 1;
+    optional bytes data = 2;
+}
+
+message Packet {
+    optional Request req = 1;
+    optional Response res = 2;
+    optional Chunk chunk = 3;
+}
