@@ -25,7 +25,7 @@ string fmd5(ifstream& file)
         const size_t flen = file.tellg();
         file.seekg(0, file.beg);
 
-        char *buf = new char[buf_size];
+        unique_ptr<char[]> buf = make_unique<char[]>(buf_size);
         int pos = 0;
         int read_size = buf_size;
         MD5_CTX ctx;
@@ -36,8 +36,8 @@ string fmd5(ifstream& file)
             {
                 read_size = flen - pos;
             }
-            file.read(buf, read_size);
-            MD5_Update(&ctx, buf, read_size);
+            file.read(buf.get(), read_size);
+            MD5_Update(&ctx, buf.get(), read_size);
             pos += read_size;
         }
         ostringstream res{};
@@ -47,7 +47,6 @@ string fmd5(ifstream& file)
         {
             res << hex << setw(2) << setfill('0') << static_cast<int>(byte_res[i]);
         }
-        delete[] buf;
         return res.str();
     }
     catch (...)
