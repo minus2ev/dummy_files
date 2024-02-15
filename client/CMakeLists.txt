@@ -6,4 +6,4 @@ set(Sources
 include_directories(${CMAKE_BINARY_DIR}/proto)
 
 add_executable(client ${Sources})
-target_link_libraries(proto OpenSSL:Crypto)
+target_link_libraries(client proto OpenSSL::Crypto)
