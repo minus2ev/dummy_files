@@ -5,6 +5,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 #include "openssl/md5.h"
 
 using namespace std;
@@ -39,12 +40,12 @@ string fmd5(ifstream& file)
             MD5_Update(&ctx, buf, read_size);
             pos += read_size;
         }
-        stringstream res{};
+        ostringstream res{};
         unsigned char byte_res[MD5_LBLOCK];
         MD5_Final(byte_res, &ctx);
         for (int i = 0; i < MD5_LBLOCK; ++i)
         {
-            res << hex << static_cast<int>(byte_res[i]);
+            res << hex << setw(2) << setfill('0') << static_cast<int>(byte_res[i]);
         }
         delete[] buf;
         return res.str();
