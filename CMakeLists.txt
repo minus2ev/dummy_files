@@ -6,5 +6,5 @@ find_package(Protobuf REQUIRED)
 find_package(OpenSSL REQUIRED)
 
 add_subdirectory(proto)
-#add_subdirectory(server)
+add_subdirectory(server)
 add_subdirectory(client)
